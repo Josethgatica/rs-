@@ -20,16 +20,15 @@ const TablaCategorias = ({ categorias, cargando, error }) => {
         <tr>
           <th>ID Categoría</th>
           <th>Nombre</th>
-          <th>descripción</th>
-
+          <th>Descripción</th>
         </tr>
       </thead>
       <tbody>
         {categorias.map((categoria) => (
           <tr key={categoria.id_categoria}>
-            <td>{categoria.ID_Categoria}</td>
-            <td>{categoria.NombreCategoria}</td>
-            <td>{categoria.Descrpcion}</td>
+            <td>{categoria.id_categoria}</td>
+            <td>{categoria.nombre_categoria}</td>
+            <td>{categoria.descripcion_categoria}</td>
           </tr>
         ))}
       </tbody>
