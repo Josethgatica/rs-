@@ -4,6 +4,8 @@ import TablaCategorias from '../components/categoria/InicioCategorias'; // Impor
 import ModalRegistroCategoria from '../components/categoria/ModalRegistroCategoria';
 import CuadroBusquedas from '../components/busqueda/CuadroBusquedas';
 import { Container, Button, Row, Col } from "react-bootstrap";
+import ModalEliminacionCategoria from '../components/categoria/ModalEliminacionCategoria';
+import ModalEdicionCategoria from '../components/categoria/ModalActualizacionCategoria';
 import "bootstrap-icons/font/bootstrap-icons.css"; // Asegúrate de importar los estilos de Bootstrap Icons aquí o en tu archivo principal
 
 // Declaración del componente Categorias
@@ -14,6 +16,11 @@ const Categorias = () => {
   const [errorCarga, setErrorCarga] = useState(null);        // Maneja errores de la petición
   const [mostrarModal, setMostrarModal] = useState(false);
   const [paginaActual, establecerPaginaActual] = useState(1);
+
+  const [mostrarModalEliminacion, setMostrarModalEliminacion] = useState(false);
+  const [categoriaAEliminar, setCategoriaAEliminar] = useState(null);
+  const [categoriaEditada, setCategoriaEditada] = useState(null);
+  const [mostrarModalEdicion, setMostrarModalEdicion] = useState(false);
   const elementosPorPagina = 5; // Número de elementos por página
   const [nuevaCategoria, setNuevaCategoria] = useState({
     nombre_categoria: '',
@@ -69,6 +76,15 @@ const Categorias = () => {
     }));
   };
 
+  const manejarCambioInputEdicion = (e) => {
+    const { name, value } = e.target;
+    setCategoriaEditada(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+
 
   // Manejo la inserción de una nueva categoría
  const agregarCategoria = async () => {
@@ -101,11 +117,90 @@ const Categorias = () => {
   };
 
 
+
+
+  
+
+
   // Calcular elementos paginados
 const categoriasPaginadas = categoriasFiltradas.slice(
   (paginaActual - 1) * elementosPorPagina,
   paginaActual * elementosPorPagina
 );
+
+
+//metodo eliminar
+const eliminarCategoria = async () => {
+  if (!categoriaAEliminar) return;
+
+  try {
+    const respuesta = await fetch(`http://localhost:3000/api/eliminarcategoria/${categoriaAEliminar.id_categoria}`, {
+      method: 'DELETE',
+    });
+
+    if (!respuesta.ok) {
+      throw new Error('Error al eliminar la categoría');
+    }
+
+    await obtenerCategorias(); // Refresca la lista
+    setMostrarModalEliminacion(false);
+    establecerPaginaActual(1); // Regresa a la primera página
+    setCategoriaAEliminar(null);
+    setErrorCarga(null);
+  } catch (error) {
+    setErrorCarga(error.message);
+  }
+};
+
+
+const abrirModalEliminacion = (categoria) => {
+  setCategoriaAEliminar(categoria);
+  setMostrarModalEliminacion(true);
+};
+
+
+
+
+const abrirModalEdicion = (categoria) => {
+  setCategoriaEditada(categoria);
+  setMostrarModalEdicion(true);
+};
+
+
+
+
+//metodo a tualizar
+
+const actualizarCategoria = async () => {
+  if (!categoriaEditada?.nombre_categoria || !categoriaEditada?.descripcion_categoria) {
+    setErrorCarga("Por favor, completa todos los campos antes de guardar.");
+    return;
+  }
+
+  try {
+    const respuesta = await fetch(`http://localhost:3000/api/actualizarcategoria/${categoriaEditada.id_categoria}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        nombre_categoria: categoriaEditada.nombre_categoria,
+        descripcion_categoria: categoriaEditada.descripcion_categoria,
+      }),
+    });
+
+    if (!respuesta.ok) {
+      throw new Error('Error al actualizar la categoría');
+    }
+
+    await obtenerCategorias();
+    setMostrarModalEdicion(false);
+    setCategoriaEditada(null);
+    setErrorCarga(null);
+  } catch (error) {
+    setErrorCarga(error.message);
+  }
+};
 
 
 
@@ -138,6 +233,8 @@ const categoriasPaginadas = categoriasFiltradas.slice(
           elementosPorPagina={elementosPorPagina} // Elementos por página
           paginaActual={paginaActual} // Página actual
           establecerPaginaActual={establecerPaginaActual} // Método para cambiar página
+          abrirModalEliminacion={abrirModalEliminacion} // Método para abrir modal de eliminación
+          abrirModalEdicion={abrirModalEdicion} // Método para abrir modal de edición
         />
 
         <ModalRegistroCategoria
@@ -148,6 +245,26 @@ const categoriasPaginadas = categoriasFiltradas.slice(
           agregarCategoria={agregarCategoria}
           errorCarga={errorCarga}
         />
+
+        <ModalEliminacionCategoria
+          mostrarModalEliminacion={mostrarModalEliminacion}
+          setMostrarModalEliminacion={setMostrarModalEliminacion}
+          eliminarCategoria={eliminarCategoria}
+        />
+
+
+
+
+        <ModalEdicionCategoria
+          mostrarModalEdicion={mostrarModalEdicion}
+          setMostrarModalEdicion={setMostrarModalEdicion}
+          categoriaEditada={categoriaEditada}
+          manejarCambioInputEdicion={manejarCambioInputEdicion}
+          actualizarCategoria={actualizarCategoria}
+          errorCarga={errorCarga}
+        />
+
+
 
       </Container>
     </>
