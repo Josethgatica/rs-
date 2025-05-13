@@ -1,18 +1,19 @@
+// ModalRegistroCategoria.jsx
 import React from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 
-const ModalEdicionCategoria = ({
-  mostrarModalEdicion,
-  setMostrarModalEdicion,
-  categoriaEditada,
-  manejarCambioInputEdicion,
-  actualizarCategoria,
+const ModalRegistroCategoria = ({
+  mostrarModal,
+  setMostrarModal,
+  nuevaCategoria,
+  manejarCambioInput,
+  agregarCategoria,
   errorCarga,
 }) => {
   return (
-    <Modal show={mostrarModalEdicion} onHide={() => setMostrarModalEdicion(false)}>
+    <Modal show={mostrarModal} onHide={() => setMostrarModal(false)}>
       <Modal.Header closeButton>
-        <Modal.Title>Editar Categoría</Modal.Title>
+        <Modal.Title>Agregar Nueva Categoría</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
@@ -21,8 +22,8 @@ const ModalEdicionCategoria = ({
             <Form.Control
               type="text"
               name="nombre_categoria"
-              value={categoriaEditada?.nombre_categoria || ""}
-              onChange={manejarCambioInputEdicion}
+              value={nuevaCategoria.nombre_categoria}
+              onChange={manejarCambioInput}
               placeholder="Ingresa el nombre (máx. 20 caracteres)"
               maxLength={20}
               required
@@ -34,8 +35,8 @@ const ModalEdicionCategoria = ({
               as="textarea"
               rows={3}
               name="descripcion_categoria"
-              value={categoriaEditada?.descripcion_categoria || ""}
-              onChange={manejarCambioInputEdicion}
+              value={nuevaCategoria.descripcion_categoria}
+              onChange={manejarCambioInput}
               placeholder="Ingresa la descripción (máx. 100 caracteres)"
               maxLength={100}
             />
@@ -46,16 +47,17 @@ const ModalEdicionCategoria = ({
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => setMostrarModalEdicion(false)}>
+        <Button variant="secondary" onClick={() => {
+          setMostrarModal(false);
+        }}>
           Cancelar
         </Button>
-        <Button variant="primary" onClick={actualizarCategoria}>
-          Guardar Cambios
+        <Button variant="primary" onClick={agregarCategoria}>
+          Guardar Categoría
         </Button>
       </Modal.Footer>
     </Modal>
   );
 };
 
-export default ModalEdicionCategoria;
-
+export default ModalRegistroCategoria;

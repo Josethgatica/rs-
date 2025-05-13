@@ -1,27 +1,33 @@
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./views/Login";
 import Inicio from "./views/Inicio";
-import Encabezado from "./components/encabezado/Encabezado";
-import Categorias from "./views/categoria";
-import Productos from "./views/producto";
+import Clientes from "./views/clientes";
 import './App.css';
-import Proveedor from "./views/proveedor";
-import Ventas from "./views/venta_factura"
-import Cliente from "./views/cliente";
+import Categorias from "./views/categorias"
+import Encabezado from "./components/encabezado/Encabezado";
+import Producto from "./views/productos";
+import Ventas from "./views/ventas";
+import Compras from "./views/Compras";
+import Catalogo from "./views/CatalogoProductos"
+
 
 const App = () => {
   return (
-    <Router>
+      <Router>
+        //Contenedor principal con margen superior
       <main className="margen-superior-main">
-        <Encabezado />
+      <Encabezado/>    
         <Routes>
+         //Definicion de rutas
           <Route path="/" element={<Login />} />
           <Route path="/inicio" element={<Inicio />} />
-          <Route path="/categoria" element={<Categorias />} />
-          <Route path="/producto" element={<Productos />} />
-          <Route path="/proveedor" element={<Proveedor />} />
-          <Route path="/venta_factura" element={<Ventas />} />
-          <Route path="/cliente" element={<Cliente />} />
+          <Route path="/clientes" element={<Clientes/>} />
+          <Route path="/productos" element={<Producto/>} />
+          <Route path="/categorias" element={<Categorias />} />
+           <Route path="/Compras" element={<Compras />} />
+          <Route path="/ventas" element={<Ventas />} />
+           <Route path="/CatalogoProductos" element={<Catalogo />} />
         </Routes>
       </main>
     </Router>
