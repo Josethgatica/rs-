@@ -28,3 +28,13 @@
 .eliminar{
  background-color: #b21f1f;
 }
+
+.titulo-blanco .dropdown-toggle {
+  color: white !important;
+  font-weight: bold;
+}
+
+.titulo-negro .dropdown-toggle {
+  color: rgb(0, 0, 0) !important;
+  font-weight: bold;
+}

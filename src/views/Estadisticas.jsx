@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import VentasPorMes from '../components/graficos/VentasPorMes';
 import VentasPorEmpleado from '../components/graficos/VentasPorEmpleado';
+import { Pie } from 'react-chartjs-2';
+
 
 const Estadisticas = () => {
   // Estados para las ventas por mes
