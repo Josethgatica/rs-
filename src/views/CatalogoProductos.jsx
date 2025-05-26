@@ -15,6 +15,7 @@ const CatalogoProductos = () => {
       const datos = await respuesta.json();
       setListaProductos(datos);
       setCargando(false);
+      console.log(datos, "response")
     } catch (error) {
       setErrorCarga(error.message);
       setCargando(false);
@@ -22,7 +23,7 @@ const CatalogoProductos = () => {
   };
 
   useEffect(() => {
-    obtenerProductos();
+    obtenerProductos();x
   }, []);
 
   if (cargando) return <div>Cargando...</div>;
