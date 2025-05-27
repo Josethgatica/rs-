@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
+import { Container, Nav, Navbar, Offcanvas, NavDropdown } from "react-bootstrap"; // Asegúrate de importar NavDropdown
 import logo from "/vite.svg"; // Importación del logo de la ferretería
 import "bootstrap-icons/font/bootstrap-icons.css"; // Importación de íconos de Bootstrap
 import "../../App.css"; // Estilos personalizados de la aplicación
@@ -8,10 +8,10 @@ import "../../App.css"; // Estilos personalizados de la aplicación
 const Encabezado = () => {
   // Estado para controlar el colapso del menú lateral
   const [estaColapsado, setEstaColapsado] = useState(false);
-  
+
   // Hook para manejar la navegación entre rutas
   const navegar = useNavigate();
-  
+
   // Hook para obtener la ubicación actual de la ruta
   const ubicacion = useLocation();
 
@@ -45,8 +45,6 @@ const Encabezado = () => {
           className="text-white"
           style={{ cursor: "pointer" }}
         >
-
-          
           <img alt="" src={logo} width="30" height="30" className="d-inline-block align-top" />{" "}
           <strong>Ferretería Selva</strong>
         </Navbar.Brand>
@@ -84,85 +82,80 @@ const Encabezado = () => {
                 onClick={() => navegarA("/inicio")}
                 className={estaColapsado ? "text-black" : "text-white"}
               >
-                
                 {estaColapsado ? <i className="bi-house-door-fill me-2"></i> : null}
                 <strong>Inicio</strong>
               </Nav.Link>
-
 
               {/* Opción de navegación a cliente */}
               <Nav.Link
                 onClick={() => navegarA("/clientes")}
                 className={estaColapsado ? "text-black" : "text-white"}
               >
-                
-                {estaColapsado ? <i className="bi-house-door-fill me-2"></i> : null}
+                {estaColapsado ? <i className="bi-person-fill me-2"></i> : null} {/* Cambié el ícono a bi-person-fill */}
                 <strong>Clientes</strong>
               </Nav.Link>
 
-                  {/* Opción de navegación a cliente */}
+              {/* Opción de navegación a compras */}
               <Nav.Link
                 onClick={() => navegarA("/compras")}
                 className={estaColapsado ? "text-black" : "text-white"}
               >
-                
-                {estaColapsado ? <i className="bi-house-door-fill me-2"></i> : null}
+                {estaColapsado ? <i className="bi-cart-fill me-2"></i> : null} {/* Cambié el ícono a bi-cart-fill */}
                 <strong>Compras</strong>
               </Nav.Link>
 
-                {/* Opción de navegación a cliente */}
-                <Nav.Link
+              {/* Opción de navegación a ventas */}
+              <Nav.Link
                 onClick={() => navegarA("/ventas")}
                 className={estaColapsado ? "text-black" : "text-white"}
               >
-                
-                {estaColapsado ? <i className="bi-house-door-fill me-2"></i> : null}
+                {estaColapsado ? <i className="bi-cash-coin me-2"></i> : null} {/* Cambié el ícono a bi-cash-coin */}
                 <strong>Ventas</strong>
               </Nav.Link>
 
-                {/* Opción de navegación a cliente */}
-                <Nav.Link
-                onClick={() => navegarA("/CatalogoProductos")}
-                className={estaColapsado ? "text-black" : "text-white"}
+              {/* NavDropdown para Productos, Categorías y Catálogo Productos */}
+              <NavDropdown
+                title={
+                  <span>
+                    {estaColapsado && <i className="bi-bag-heart-fill me-2"></i>}
+                    Productos
+                  </span>
+                }
+                id="basic-nav-dropdown"
+                className={estaColapsado ? "titulo-negro" : "titulo-blanco"}
               >
-                
-                {estaColapsado ? <i className="bi-house-door-fill me-2"></i> : null}
-                <strong>Catalogo</strong>
-              </Nav.Link>
+                <NavDropdown.Item
+                  onClick={() => navegarA("/productos")}
+                  className="text-black"
+                >
+                  {estaColapsado ? <i className="bi-box2-heart-fill me-2"></i> : null}
+                  <strong>Gestión Productos</strong>
+                </NavDropdown.Item>
 
-               <Nav.Link
+                <NavDropdown.Item
+                  className="text-black"
+                  onClick={() => navegarA("/categorias")}
+                >
+                  {estaColapsado ? <i className="bi-bookmarks-fill me-2"></i> : null}
+                  <strong>Gestión Categorias</strong>
+                </NavDropdown.Item>
+
+                <NavDropdown.Item
+                  onClick={() => navegarA("/catalogoproductos")}
+                  className="text-black"
+                >
+                  {estaColapsado ? <i className="bi-images me-2"></i> : null}
+                  <strong>Catalogo Productos</strong>
+                </NavDropdown.Item>
+              </NavDropdown>
+
+              {/* Opción de navegación a estadísticas */}
+              <Nav.Link
                 onClick={() => navegarA("/estadisticas")}
                 className={estaColapsado ? "text-black" : "text-white"}
               >
-                
-                {estaColapsado ? <i className="bi-house-door-fill me-2"></i> : null}
-                <strong>estadisticas</strong>
-              </Nav.Link>
-
-
-              
-
-
-              {/* Opción de navegación a producto */}
-              <Nav.Link
-                onClick={() => navegarA("/productos")}
-                className={estaColapsado ? "text-black" : "text-white"}
-              >
-
-                
-                
-                {estaColapsado ? <i className="bi-house-door-fill me-2"></i> : null}
-                <strong>Productos</strong>
-              </Nav.Link>
-
-                {/* Opción de navegación a categorias */}
-                <Nav.Link
-                onClick={() => navegarA("/categorias")}
-                className={estaColapsado ? "text-black" : "text-white"}
-              >
-                
-                {estaColapsado ? <i className="bi-house-door-fill me-2"></i> : null}
-                <strong>Categorias</strong>
+                {estaColapsado ? <i className="bi-graph-up-arrow me-2"></i> : null} {/* Cambié el ícono a bi-graph-up-arrow */}
+                <strong>Estadísticas</strong>
               </Nav.Link>
 
               {/* Lógica condicional para mostrar Cerrar Sesión o Iniciar Sesión */}
@@ -172,6 +165,7 @@ const Encabezado = () => {
                   onClick={cerrarSesion}
                   className={estaColapsado ? "text-black" : "text-white"}
                 >
+                  <i className="bi-box-arrow-right me-2"></i> {/* Agregué ícono de cerrar sesión */}
                   Cerrar Sesión
                 </Nav.Link>
               ) : (
@@ -181,6 +175,7 @@ const Encabezado = () => {
                     onClick={() => navegarA("/")}
                     className={estaColapsado ? "text-black" : "text-white"}
                   >
+                    <i className="bi-box-arrow-in-right me-2"></i> {/* Agregué ícono de iniciar sesión */}
                     Iniciar Sesión
                   </Nav.Link>
                 )
@@ -194,4 +189,3 @@ const Encabezado = () => {
 };
 
 export default Encabezado;
-
