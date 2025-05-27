@@ -126,7 +126,7 @@ const Productos = () => {
     const confirmar = window.confirm('¿Estás seguro de que quieres eliminar este producto?');
     if (confirmar) {
       try {
-        const respuesta = await fetch(`http://localhost:3000/api/eliminarproducto/${id}`, {
+        const respuesta = await fetch(`http://localhost:3000/api/eliminarProducto/${id}`, {
           method: 'DELETE',
         });
         if (!respuesta.ok) throw new Error('Error al eliminar el producto');

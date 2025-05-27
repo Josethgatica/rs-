@@ -1,33 +1,52 @@
 import React from "react";
 import { Col, Card, Badge, Stack } from 'react-bootstrap';
+import Paginacion from "../ordenamiento/Paginacion";
+import "../../index.css"
 
-const Tarjeta = ({ indice, nombre_producto, descripcion_producto, precio_unitario, stock, id_categoria, imagen }) => {
+const Tarjeta = ({ indice, 
+  nnombreProducto, 
+  Descripcion,
+   PrecioVenta, 
+   Stock, ID_Categoria, 
+   UbicacionFotografia,
+    totalElementos,
+   elementosPorPagina,
+   paginaActual,
+   establecerPaginaActual
+  }) => {
   return (
+    <>
     <Col lg={3} className="mt-3">
-      <Card border="">
+      <Card border=""
+      className="animate__animated animate__backInDown" >
         <Card.Img
           variant="top"
-          src={`data:image/png;base64,${imagen}`}
+          src={`data:image/png;base64,${UbicacionFotografia}`}
+      
+          className="item"
         />
         <Card.Body>
           <Card.Title>
-            <strong>{nombre_producto}</strong>
+            <strong>{nnombreProducto}</strong>
           </Card.Title>
-          <Card.Text>{descripcion_producto || 'Sin descripción'}</Card.Text>
+          <Card.Text>{Descripcion || 'Sin descripción'}</Card.Text>
           <Stack direction="horizontal" gap={2}>
             <Badge pill bg="primary">
-              <i className="bi-currency-dollar"></i> {precio_unitario.toFixed(2)}
+              <i className="bi-cash"></i> {PrecioVenta.toFixed(2)}
             </Badge>
             <Badge pill bg="secondary">
-              <i className="bi-box"></i> Stock: {stock}
+              <i className="bi-box"></i> Stock: {Stock}
             </Badge>
             <Badge pill bg="info">
-              <i className="bi-tag"></i> Categoría: {id_categoria}
+              <i className="bi-tag"></i> Categoría: {ID_Categoria}
             </Badge>
           </Stack>
+          
         </Card.Body>
       </Card>
     </Col>
+
+</>
   );
 };
 
